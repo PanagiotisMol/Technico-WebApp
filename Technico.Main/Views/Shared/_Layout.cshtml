@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Technico</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Technico.Main.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="icon" href="imgs/b3d46e87-698a-4867-9e99-38b5d1cbadfb.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <img src="~/imgs/b3d46e87-698a-4867-9e99-38b5d1cbadfb.png" alt="Technico Logo" style="max-width: 5%; height: auto;"> 
+                <a class="navbar-brand" id="homeID" style="display: block;" asp-area="" asp-controller="Home" asp-action="Index">Technico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogIn">LogIn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item" id="showProperties" style="display: none;">
+                            <a class="nav-link text-dark" href="javascript:void(0);" onclick="getProfile('Properties','MyProperties');">
+                                <i class="fas fa-building"></i> Properties
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item" id="showRepairs" style="display: none;">
+                            <a class="nav-link text-dark" href="javascript:void(0);" onclick="getProfile('OwnerRepairs','Index');">
+                                <i class="fa-solid fa-hammer"></i> Repairs
+                            </a>
+                        </li>
+                        <li class="nav-item" id="adminOwner" style="display: none;">
+                            <a class="nav-link text-dark" asp-controller="AdminOwner" asp-action="Index">
+                                <i class="fas fa-user"></i> Owners
+                            </a>
+                        </li>
+                        <li class="nav-item" id="adminProperty" style="display: none;">
+                            <a class="nav-link text-dark" asp-controller="AdminProperty" asp-action="Index">
+                                <i class="fas fa-building"></i> Properties
+                            </a>
+                        </li>
+                        <li class="nav-item" id="adminRepairs" style="display: none;">
+                            <a class="nav-link text-dark" href="javascript:void(0);" onclick="getProfile('AdminRepairs','Index');"><i class="fa-solid fa-hammer"></i> Repairs</a>
+                        </li>
+                        <li class="nav-item" id="showUserName"  style="display: none;">
+                            <a class="nav-link text-dark" href="javascript:void(0);" onclick="getProfile('Owner','Profile');">
+                                <i class="bi bi-person-fill"></i> Profile
+                            </a>
+                        </li>
+                            <li class="nav-item ms-auto" id="logoutLink" style="display: none;">
+                                <a class="nav-link text-dark" href="javascript:void(0);" onclick="logOut()">
+                                    <i class="bi bi-door-open me-2"></i>Log Out
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="genericModal" tabindex="-1" aria-labelledby="genericModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Modal -->
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Technico
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>   <!-- All the js code for the layout is here!!! -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

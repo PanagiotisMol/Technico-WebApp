@@ -1,0 +1,54 @@
+﻿@model Technico.Main.Models.OwnerViewModel
+
+<div class="container col-6 offset-3 mt-5">
+    <h1 class="mb-3 text-center">Profile Details</h1>
+    <div class="card p-4">
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>Firstname:</strong></p>
+            <span class="col-xs col">@Model.Owner.Firstname</span>
+        </div>
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>Lastname:</strong></p>
+            <span class="col-6">@Model.Owner.Lastname</span>
+        </div>
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>Email:</strong></p>
+            <span class="col-sm-5 col-6">@Model.Owner.Email</span>
+        </div>
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>Phone:</strong></p>
+            <span class="col-6">@Model.Owner.Phone</span>
+        </div>
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>Address:</strong></p>
+            <span class="col-6">@Model.Owner.Address</span>
+        </div>
+        <div class="mb-3 row">
+            <p class="col-sm-5 col"><strong>VAT:</strong></p>
+            <span class="col">@Model.Owner.Vat</span>
+        </div>
+    </div>
+    <div class="row  mt-5">
+        <a type="button" class="col-3 offset-1 btn btn-danger" onclick="return confirmDelete('@Model.Owner.Id');">DELETE</a>
+        <a type="button" class="col-3 offset-4 btn btn-info" asp-route-id="@Model.Owner.Id" asp-controller="Owner" asp-action="Update">UPDATE </a>
+    </div>
+</div>
+
+
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this account?")) {
+            // Only submit the delete request if user confirms
+            fetch(`/Owner/Delete/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                logOut();
+            });
+        }
+        // Important: Prevent the default form submission
+        return false;
+    }
+</script>

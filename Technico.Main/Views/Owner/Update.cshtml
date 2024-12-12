@@ -1,0 +1,55 @@
+﻿@model Technico.Main.DTOs.OwnerDtoResponse
+
+@{
+
+}
+
+
+<div class="card col-md-8 col-lg-6 mx-auto shadow-lg p-4 my-5">
+    <h3 class="card-title mb-4 text-center">Update Details</h3>
+    <form asp-action="Update" method="post" asp-route-id="@Model.Id">
+        <div class="form-group mb-3">
+            <label asp-for="Vat" class="form-label">VAT</label>
+            <input asp-for="Vat" class="form-control" />
+            <span asp-validation-for="Vat" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Firstname" class="form-label">First Name</label>
+            <input asp-for="Firstname" class="form-control" />
+            <span asp-validation-for="Firstname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Lastname" class="form-label">Last Name</label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input asp-for="Phone" type="tel" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Address" class="form-label">Address (Optional)</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+
+        <div class="form-group pb-3" style="display:none">
+            <input type="test" class="form-control" asp-for="Role" placeholder="Role" value=0 readonly required>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary px-4 me-2">Update</button>
+            <a href= /Owner/Profile?id={@Model.Id}  class="btn btn-secondary px-4 me-2">Cancel</a>
+        </div>
+    </form>
+</div>

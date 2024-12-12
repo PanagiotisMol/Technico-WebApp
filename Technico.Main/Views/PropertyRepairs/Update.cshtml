@@ -1,0 +1,56 @@
+﻿@model Technico.Main.DTOs.UpdateRepairDto
+﻿@using Technico.Main.Models
+@using Technico.Main.Models.Enums
+@{
+    ViewData["Title"] = "Update Repair";
+    var repair = ViewData["Repair"] as Technico.Main.DTOs.RepairDtos.RepairDto;
+
+ 
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow p-4" style="max-width: 600px; width: 100%;">
+        <h2 class="text-center mb-4">Update Repair</h2>
+
+        <form id="updateRepairForm" asp-action="Update" method="post" asp-route-PropertyId="@(ViewData["PropertyId"] ?? Guid.Empty)">
+
+            <input type="hidden" value="@repair.Id" asp-for="Id" />
+            <div class="mb-3">
+                <label for="Type" class="form-label">Repair Type</label>
+                <select class="form-select" asp-for="Type" required>
+                    <option value="@repair.Type" hidden selected>@repair.Type.ToString().Replace('_', ' ')</option>
+                    @foreach (var type in Enum.GetValues(typeof(TypeOfRepair)))
+                    {
+                        <option value="@type">@type.ToString().Replace('_', ' ')</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Description" class="form-label">Description</label>
+                <input type="text" class="form-control" asp-for="Description" placeholder="Description" value="@repair.Description" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="Status" class="form-label">Status</label>
+                <select class="form-select" asp-for="Status" required>
+                    <option value="@repair.Status" hidden selected>@repair.Status.ToString().Replace('_', ' ')</option>
+                    @foreach (var status in Enum.GetValues(typeof(StatusOfRepair)))
+                    {
+                        <option value="@status">@status.ToString().Replace('_', ' ')</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Cost" class="form-label">Repair Cost</label>
+                <input type="number" step="0.01" class="form-control" asp-for="Cost" value="@repair.Cost" />
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>

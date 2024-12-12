@@ -1,0 +1,195 @@
+﻿
+@using Technico.Main.DTOs.PropertyDtos;
+@using Technico.Main.Models.Enums;
+@model List<PropertyDtoResponse>
+
+@{
+    ViewData["Title"] = "Properties";
+}
+    <div class="container my-5">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-user-shield me-2"></i>Properties
+                </h3>
+            </div>
+            <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Admin Home Page
+                </a>
+            </div>
+            <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="card-title mb-0">Property Search</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" asp-controller="AdminProperty" asp-action="Search">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="e9"
+                                                       name="e9"
+                                                       placeholder="Search by E9"
+                                                       oninput="validateForm()">
+                                                <label for="e9">E9 Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="vat"
+                                                       name="vat"
+                                                       placeholder="Search by VAT"
+                                                       oninput="validateForm()">
+                                                <label for="vat">VAT Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button type="reset" class="btn btn-outline-secondary" onclick="validateForm()">Clear</button>
+                                                <button type="submit"
+                                                        class="btn btn-primary"
+                                                        id="searchButton"
+                                                        disabled>
+                                                    <i class="bi bi-search"></i> Search
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                     
+
+
+                <div class="mb-4">
+                    <a class="btn btn-primary" asp-action="Create">Create new property</a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered align-middle">
+                        <thead class="table-dark sticky-top">
+                            <tr class="text-center">
+                                <th class="align-middle">E9</th>
+                                <th class="align-middle">Vat</th>
+                                <th class="align-middle">Address</th>
+                                <th class="align-middle">Construction Year</th>
+                                <th class="align-middle">Type of Property</th>
+                                <th class="align-middle">Owners</th>
+                                <th class="align-middle" style="width: 150px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-light" id="propertyTableBody">
+                            @foreach (var property in Model)
+                            {
+                                <tr class="property-row">
+                                <td class="text-center">@property.E9</td>
+                                <td class="text-center">
+                                    @if (property?.Owners?.Any() == true)
+                                    {
+                                        <div class="d-flex flex-wrap justify-content-center gap-1">
+                                            @foreach (var owner in property.Owners)
+                                            {
+                                                <span class="badge bg-primary badge-hover"
+                                                      data-bs-toggle="tooltip"
+                                                      title="@($"{owner.Firstname} {owner.Lastname}")">
+                                                    <i class="fas fa-user-circle me-1"></i>
+                                                    @owner.Vat
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">
+                                            <i class="fas fa-user-slash me-1"></i>
+                                            No owners
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-center">@property.Address</td>
+                                <td class="text-center">@property.ConstructionYear</td>
+                                <td class="text-center">@property.Type</td>
+                                <td class="text-center">
+                                    <!-- Display number of owners -->
+                                    @(property.Owners?.Count ?? 0)
+                                </td>
+                                <td class="text-center align-middle">
+
+                                        <div class="btn-group" role="group">
+
+                                            <a asp-action="Update" asp-route-id="@property.Id" class="btn btn-outline-primary btn-sm me-2 rounded-pill" data-bs-toggle="tooltip" title="Edit Property">
+                                                <i class="fas fa-cog"></i>
+                                            </a>
+
+                                            <a asp-action="Delete" asp-route-id="@property.Id" class="btn btn-outline-danger btn-sm me-2" data-bs-toggle="tooltip" title="Delete Property" 
+                                               onclick="return confirmDelete();">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                             <a asp-controller="PropertyRepairs" asp-action="Index" asp-route-propertyId="@property.Id" class="btn btn-outline-primary btn-sm me-2 rounded-pill" data-bs-toggle="tooltip" title="View Property">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </a>
+
+                                        <a asp-action="BindOwner" asp-route-propertyId="@property.Id"
+                                           class="btn btn-outline-success btn-sm me-2 rounded-pill"
+                                           data-bs-toggle="tooltip" title="Bind Owner to this Property">
+                                            <i class="fas fa-user-plus"></i>
+                                        </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+        });
+
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this property?");
+        }
+
+       function validateForm() {
+            const e9Input = document.getElementById('e9').value.trim();
+            const vatInput = document.getElementById('vat').value.trim();
+            const searchButton = document.getElementById('searchButton');
+
+            // Enable button only if at least one field has a value
+            searchButton.disabled = (e9Input === '' && vatInput === '');
+        }
+
+            // Initial validation on page load
+        document.addEventListener('DOMContentLoaded', validateForm);
+
+    </script>
+
+<style>
+    .badge-hover {
+        transition: all 0.3s ease;
+        cursor: default;
+    }
+
+        .badge-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+</style>
