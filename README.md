@@ -1,6 +1,3 @@
-![image](https://github.com/user-attachments/assets/30076537-29bd-4771-9ca8-ebdbe347ff4d)
-## Demo
-You can visit our [demo](https://technicoteam3-d7gka0hyh8avf3g9.northeurope-01.azurewebsites.net/)
 ## Project general description
 A Renovation Contractor Agency, Technico, within the framework of its operation, needs a
 web application that will enable the employees - managers of this platform to access
@@ -40,9 +37,6 @@ of a solar water heater)
 status)
 - Cost of repair
 - Owner for whom the repair is made
-
-## Brief diagram of Application
-![technico drawio](https://github.com/user-attachments/assets/30f6660b-7c4b-4485-a629-db3f918aba08)
 
 ## Non-functional requirements
 1. ASP.NET Core
